@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Dog Language",
+  "scopeName": "source.dog",
+  "patterns": [
+    {
+      "name": "keyword.control.dog",
+      "match": "\\b(dar_a_pata|ou_fingir_de_morto|focar_no_esquilo|trazer_bolinha|chamar_matilha|matilha|novo|funcao|instinto)\\b"
+    },
+    {
+      "name": "entity.name.function.dog",
+      "match": "\\b(canil|latir|farejar|latir_alto)\\b"
+    },
+    {
+      "name": "storage.type.dog",
+      "match": "\\b(pedigree|pelo|carne|raça|pinscher|vira_lata|inteiro|real|texto|booleano)\\b"
+    },
+    {
+      "name": "keyword.operator.dog",
+      "match": "\\b(AU|UAU)\\b"
+    },
+    {
+      "name": "string.quoted.double.dog",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.dog",
+          "match": "\\\\."
+        }
+      ]
+    },
+    {
+      "name": "constant.numeric.dog",
+      "match": "\\b\\d+\\b"
+    },
+    {
+      "name": "comment.line.double-slash.dog",
+      "match": "//.*$"
+    },
+    {
+      "name": "comment.block.dog",
+      "begin": "/\\*",
+      "end": "\\*/"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "dog-lang",
+  "displayName": "Dog Language Support",
+  "description": "Highlight para a linguagem canina Dog",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.50.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "dog",
+        "aliases": ["Dog", "dog"],
+        "extensions": [".dog"]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "dog",
+        "scopeName": "source.dog",
+        "path": "./syntaxes/dog.tmLanguage.json"
+      }
+    ]
+  }
+}
