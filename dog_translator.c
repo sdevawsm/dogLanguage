@@ -4,8 +4,7 @@
 #include <ctype.h>
 
 void traduzir(FILE *in, FILE *out) {
-    // Injeção de cabeçalhos necessária para as funções de sistema
-    fprintf(out, "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\n");
+    fprintf(out, "#include <stdio.h>\n#include <stdlib.h>\n\n");
 
     char buffer[32768];
     int pos = fread(buffer, 1, sizeof(buffer) - 1, in);
@@ -13,96 +12,245 @@ void traduzir(FILE *in, FILE *out) {
 
     int i = 0;
     int em_matilha = 0;
+    int em_metodo = 0;
+
     char nome_matilha[256] = "";
 
     while (i < pos) {
-        // Ignorar espaços e comentários
+
+        // =========================
+        // STRING (não mexer dentro)
+        // =========================
+        if (buffer[i] == '"') {
+            fputc(buffer[i++], out);
+
+            while (i < pos && buffer[i] != '"') {
+                fputc(buffer[i++], out);
+            }
+
+            if (i < pos) fputc(buffer[i++], out);
+            continue;
+        }
+
+        // espaços
         if (isspace(buffer[i])) {
             fputc(buffer[i++], out);
             continue;
         }
 
-        // Processar strings
-        if (buffer[i] == '"') {
-            fputc(buffer[i++], out);
-            while (i < pos && buffer[i] != '"') fputc(buffer[i++], out);
-            if (i < pos) fputc(buffer[i++], out);
-            continue;
-        }
-
-        // Processar Identificadores
+        // palavras
         if (isalpha(buffer[i]) || buffer[i] == '_') {
             char word[256];
             int wpos = 0;
+
             while (i < pos && (isalnum(buffer[i]) || buffer[i] == '_')) {
                 word[wpos++] = buffer[i++];
             }
             word[wpos] = '\0';
 
-            // Lógica de Classes (Matilha)
+            // =========================
+            // MATILHA
+            // =========================
             if (strcmp(word, "matilha") == 0) {
                 while (isspace(buffer[i])) i++;
+
                 int npos = 0;
-                while (isalnum(buffer[i])) nome_matilha[npos++] = buffer[i++];
+                while (isalnum(buffer[i])) {
+                    nome_matilha[npos++] = buffer[i++];
+                }
                 nome_matilha[npos] = '\0';
-                fprintf(out, "typedef struct %s %s;\nstruct %s", nome_matilha, nome_matilha, nome_matilha);
+
+                fprintf(out,
+                    "typedef struct %s %s;\nstruct %s ",
+                    nome_matilha, nome_matilha, nome_matilha);
+
                 em_matilha = 1;
-            } 
+            }
+
+            // =========================
+            // INSTINTO (CONSTRUTOR)
+            // =========================
             else if (strcmp(word, "instinto") == 0) {
-                // Construtor: void init_NomeDaClasse
-                fprintf(out, "void init_%s", nome_matilha);
+
+                fprintf(out, "};\nvoid init_%s(%s* self", nome_matilha, nome_matilha);
+
+                em_matilha = 0;
+                em_metodo = 1;
+
+                while (buffer[i] != '(') i++;
+                i++; // (
+
+                if (buffer[i] != ')') {
+                    fprintf(out, ", ");
+
+                    while (buffer[i] != ')') {
+                        if (strncmp(&buffer[i], "pinscher", 8) == 0) {
+                            fprintf(out, "int");
+                            i += 8;
+                        } else {
+                            fputc(buffer[i], out);
+                            i++;
+                        }
+                    }
+                }
+
+                fprintf(out, ")");
+                i++; // )
             }
+
+            // =========================
+            // FUNÇÃO
+            // =========================
             else if (strcmp(word, "funcao") == 0) {
-                // Se estiver dentro de uma matilha, é um método
-                fprintf(out, "void"); 
-            }
-            else if (strcmp(word, "AU") == 0) {
-                fprintf(out, "{");
-            }
-            else if (strcmp(word, "UAU") == 0) {
-                if (em_matilha && buffer[i] != ' ' && buffer[i] != '\n') { // heurística simples
-                    fprintf(out, "}"); // fechando método
-                } else if (em_matilha) {
-                    fprintf(out, "};"); // fechando a struct da matilha
+
+                if (em_matilha) {
+                    fprintf(out, "};\n");
                     em_matilha = 0;
+                }
+
+                while (isspace(buffer[i])) i++;
+
+                char func_name[256];
+                int fpos = 0;
+
+                while (isalnum(buffer[i]) || buffer[i] == '_') {
+                    func_name[fpos++] = buffer[i++];
+                }
+                func_name[fpos] = '\0';
+
+                // consumir ()
+                while (buffer[i] != '(') i++;
+                i++;
+                while (buffer[i] != ')') i++;
+                i++;
+
+                if (strcmp(func_name, "canil") == 0) {
+                    fprintf(out, "int main()");
+                    em_metodo = 0;
                 } else {
-                    fprintf(out, "}");
+                    fprintf(out, "void %s(%s* self)", func_name, nome_matilha);
+                    em_metodo = 1;
                 }
             }
-            // Palavras Divertidas
-            else if (strcmp(word, "chamar_matilha") == 0) fprintf(out, "#include");
-            else if (strcmp(word, "canil") == 0) fprintf(out, "int main");
+
+            // =========================
+            // VARIÁVEL / OBJETO
+            // =========================
+            else if (strcmp(word, "vira_lata") == 0) {
+
+                while (isspace(buffer[i])) i++;
+
+                char var_name[256];
+                int vpos = 0;
+
+                while (isalnum(buffer[i])) {
+                    var_name[vpos++] = buffer[i++];
+                }
+                var_name[vpos] = '\0';
+
+                while (isspace(buffer[i]) || buffer[i] == '=') i++;
+
+                if (strncmp(&buffer[i], "novo", 4) == 0) {
+                    i += 4;
+
+                    while (isspace(buffer[i])) i++;
+
+                    char type[256];
+                    int tpos = 0;
+
+                    while (isalnum(buffer[i])) {
+                        type[tpos++] = buffer[i++];
+                    }
+                    type[tpos] = '\0';
+
+                    // pegar argumentos
+                    while (buffer[i] != '(') i++;
+                    i++;
+
+                    char args[256];
+                    int apos = 0;
+
+                    while (buffer[i] != ')') {
+                        args[apos++] = buffer[i++];
+                    }
+                    args[apos] = '\0';
+                    i++;
+
+                    fprintf(out,
+                        "%s* %s = (%s*)malloc(sizeof(%s));\n",
+                        type, var_name, type, type);
+
+                    fprintf(out,
+                        "init_%s(%s, %s);",
+                        type, var_name, args);
+                }
+            }
+
+            // =========================
+            // KEYWORDS
+            // =========================
+            else if (strcmp(word, "AU") == 0) fprintf(out, "{");
+            else if (strcmp(word, "UAU") == 0) {
+                fprintf(out, "}");
+                em_metodo = 0;
+            }
             else if (strcmp(word, "latir") == 0) fprintf(out, "printf");
-            else if (strcmp(word, "farejar") == 0) fprintf(out, "scanf");
             else if (strcmp(word, "pinscher") == 0) fprintf(out, "int");
-            else if (strcmp(word, "vira_lata") == 0) fprintf(out, "int");
             else if (strcmp(word, "dar_a_pata") == 0) fprintf(out, "if");
             else if (strcmp(word, "ou_fingir_de_morto") == 0) fprintf(out, "else");
             else if (strcmp(word, "focar_no_esquilo") == 0) fprintf(out, "while");
             else if (strcmp(word, "trazer_bolinha") == 0) fprintf(out, "return");
-            else if (strcmp(word, "novo") == 0) {
-                 while (isspace(buffer[i])) i++;
-                 char tipo[256]; int tpos = 0;
-                 while (isalnum(buffer[i])) tipo[tpos++] = buffer[i++];
-                 tipo[tpos] = '\0';
-                 fprintf(out, "(%s*)malloc(sizeof(%s))", tipo, tipo);
+
+            // =========================
+            // VARIÁVEIS EM MÉTODO
+            // =========================
+            else {
+                if (em_metodo &&
+                    strcmp(word, "self") != 0 &&
+                    strcmp(word, "e") != 0) {
+
+                    fprintf(out, "self->%s", word);
+                } else {
+                    fprintf(out, "%s", word);
+                }
             }
-            else fprintf(out, "%s", word);
-            
+
             continue;
         }
 
-        fputc(buffer[i++], out);
+        // operador ponto
+        if (buffer[i] == '.') {
+            fprintf(out, "->");
+            i++;
+        }
+        else {
+            fputc(buffer[i++], out);
+        }
     }
 }
 
+// =========================
+// MAIN DO TRADUTOR
+// =========================
 int main(int argc, char *argv[]) {
-    if (argc < 2) { return printf("Uso: %s arquivo.dog\n", argv[0]), 1; }
+    if (argc < 2) {
+        printf("Uso: ./dogc arquivo.dog\n");
+        return 1;
+    }
+
     FILE *in = fopen(argv[1], "r");
+    if (!in) {
+        printf("Erro ao abrir arquivo\n");
+        return 1;
+    }
+
     FILE *out = fopen("traduzido.c", "w");
-    if (!in || !out) return 1;
+
     traduzir(in, out);
-    fclose(in); fclose(out);
-    printf("🐕 Tradução concluída com sucesso!\n");
+
+    fclose(in);
+    fclose(out);
+
+    printf("🐕 Código traduzido com sucesso!\n");
     return 0;
 }
