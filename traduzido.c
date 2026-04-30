@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//chamar_matilha <brinquedos->h>
+//chamar_matilha <brinquedos.h>
 
 typedef struct GoldenRetriever GoldenRetriever;
-struct GoldenRetriever  {
+struct GoldenRetriever {
+ 
     int energia;
 
     };
@@ -15,11 +16,12 @@ void init_GoldenRetriever(GoldenRetriever* self, int e) {
     void latir_alto(GoldenRetriever* self) {
         printf("WOOF WOOF!\n");
     }
-}
+
 
 int main() {
     GoldenRetriever* rex = (GoldenRetriever*)malloc(sizeof(GoldenRetriever));
-init_GoldenRetriever(rex, 10);;
+init_GoldenRetriever(rex, 10);
+;
 
     if (rex->energia > 5) {
         printf("O Rex quer brincar!\n");

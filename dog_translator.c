@@ -11,35 +11,51 @@ void traduzir(FILE *in, FILE *out) {
     buffer[pos] = '\0';
 
     int i = 0;
+
     int em_matilha = 0;
     int em_metodo = 0;
+    int struct_fechada = 0;
+    int ignorar_proximo_AU = 0;
 
     char nome_matilha[256] = "";
 
     while (i < pos) {
 
         // =========================
-        // STRING (não mexer dentro)
+        // COMENTÁRIO
+        // =========================
+        if (buffer[i] == '/' && buffer[i+1] == '/') {
+            while (i < pos && buffer[i] != '\n') {
+                fputc(buffer[i++], out);
+            }
+            continue;
+        }
+
+        // =========================
+        // STRING
         // =========================
         if (buffer[i] == '"') {
             fputc(buffer[i++], out);
-
             while (i < pos && buffer[i] != '"') {
                 fputc(buffer[i++], out);
             }
-
             if (i < pos) fputc(buffer[i++], out);
             continue;
         }
 
-        // espaços
+        // =========================
+        // ESPAÇO
+        // =========================
         if (isspace(buffer[i])) {
             fputc(buffer[i++], out);
             continue;
         }
 
-        // palavras
+        // =========================
+        // PALAVRAS
+        // =========================
         if (isalpha(buffer[i]) || buffer[i] == '_') {
+
             char word[256];
             int wpos = 0;
 
@@ -48,10 +64,9 @@ void traduzir(FILE *in, FILE *out) {
             }
             word[wpos] = '\0';
 
-            // =========================
-            // MATILHA
-            // =========================
+            // ===== MATILHA =====
             if (strcmp(word, "matilha") == 0) {
+
                 while (isspace(buffer[i])) i++;
 
                 int npos = 0;
@@ -61,24 +76,29 @@ void traduzir(FILE *in, FILE *out) {
                 nome_matilha[npos] = '\0';
 
                 fprintf(out,
-                    "typedef struct %s %s;\nstruct %s ",
+                    "typedef struct %s %s;\nstruct %s {\n",
                     nome_matilha, nome_matilha, nome_matilha);
 
                 em_matilha = 1;
+                struct_fechada = 0;
+                ignorar_proximo_AU = 1; // evita { duplicado
             }
 
-            // =========================
-            // INSTINTO (CONSTRUTOR)
-            // =========================
+            // ===== INSTINTO =====
             else if (strcmp(word, "instinto") == 0) {
 
-                fprintf(out, "};\nvoid init_%s(%s* self", nome_matilha, nome_matilha);
+                if (!struct_fechada) {
+                    fprintf(out, "};\n");
+                    struct_fechada = 1;
+                }
 
-                em_matilha = 0;
+                fprintf(out, "void init_%s(%s* self", nome_matilha, nome_matilha);
+
                 em_metodo = 1;
+                em_matilha = 0;
 
                 while (buffer[i] != '(') i++;
-                i++; // (
+                i++;
 
                 if (buffer[i] != ')') {
                     fprintf(out, ", ");
@@ -95,16 +115,15 @@ void traduzir(FILE *in, FILE *out) {
                 }
 
                 fprintf(out, ")");
-                i++; // )
+                i++;
             }
 
-            // =========================
-            // FUNÇÃO
-            // =========================
+            // ===== FUNÇÃO =====
             else if (strcmp(word, "funcao") == 0) {
 
-                if (em_matilha) {
+                if (em_matilha && !struct_fechada) {
                     fprintf(out, "};\n");
+                    struct_fechada = 1;
                     em_matilha = 0;
                 }
 
@@ -133,9 +152,7 @@ void traduzir(FILE *in, FILE *out) {
                 }
             }
 
-            // =========================
-            // VARIÁVEL / OBJETO
-            // =========================
+            // ===== OBJETO =====
             else if (strcmp(word, "vira_lata") == 0) {
 
                 while (isspace(buffer[i])) i++;
@@ -163,7 +180,6 @@ void traduzir(FILE *in, FILE *out) {
                     }
                     type[tpos] = '\0';
 
-                    // pegar argumentos
                     while (buffer[i] != '(') i++;
                     i++;
 
@@ -181,19 +197,20 @@ void traduzir(FILE *in, FILE *out) {
                         type, var_name, type, type);
 
                     fprintf(out,
-                        "init_%s(%s, %s);",
+                        "init_%s(%s, %s);\n",
                         type, var_name, args);
                 }
             }
 
-            // =========================
-            // KEYWORDS
-            // =========================
-            else if (strcmp(word, "AU") == 0) fprintf(out, "{");
-            else if (strcmp(word, "UAU") == 0) {
-                fprintf(out, "}");
-                em_metodo = 0;
+            // ===== KEYWORDS =====
+            else if (strcmp(word, "AU") == 0) {
+                if (ignorar_proximo_AU) {
+                    ignorar_proximo_AU = 0;
+                } else {
+                    fprintf(out, "{");
+                }
             }
+            else if (strcmp(word, "UAU") == 0) fprintf(out, "}");
             else if (strcmp(word, "latir") == 0) fprintf(out, "printf");
             else if (strcmp(word, "pinscher") == 0) fprintf(out, "int");
             else if (strcmp(word, "dar_a_pata") == 0) fprintf(out, "if");
@@ -201,9 +218,7 @@ void traduzir(FILE *in, FILE *out) {
             else if (strcmp(word, "focar_no_esquilo") == 0) fprintf(out, "while");
             else if (strcmp(word, "trazer_bolinha") == 0) fprintf(out, "return");
 
-            // =========================
-            // VARIÁVEIS EM MÉTODO
-            // =========================
+            // ===== VARIÁVEIS =====
             else {
                 if (em_metodo &&
                     strcmp(word, "self") != 0 &&
@@ -218,21 +233,19 @@ void traduzir(FILE *in, FILE *out) {
             continue;
         }
 
-        // operador ponto
+        // ===== OPERADOR . =====
         if (buffer[i] == '.') {
             fprintf(out, "->");
             i++;
-        }
-        else {
+        } else {
             fputc(buffer[i++], out);
         }
     }
 }
 
-// =========================
-// MAIN DO TRADUTOR
-// =========================
+// ===== MAIN =====
 int main(int argc, char *argv[]) {
+
     if (argc < 2) {
         printf("Uso: ./dogc arquivo.dog\n");
         return 1;
