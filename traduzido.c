@@ -1,20 +1,24 @@
-#include <brinquedos.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-typedef struct  GoldenRetriever GoldenRetriever;
+//#include <brinquedos.h>
+
+typedef struct GoldenRetriever GoldenRetriever;
 struct GoldenRetriever {
     int energia;
 
-    (int e) {
+    void init_GoldenRetriever(int e) {
         energia = e;
-    }
+    };
 
-     latir_alto() {
+    void latir_alto() {
         printf("WOOF WOOF!\n");
     }
 }
 
- canil() {
-    int rex = (struct GoldenRetriever *)malloc(sizeof(struct GoldenRetriever))(10);
+void int main() {
+    int rex = (GoldenRetriever*)malloc(sizeof(GoldenRetriever))(10);
 
     if (rex.energia > 5) {
         printf("O Rex quer brincar!\n");
