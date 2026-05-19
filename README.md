@@ -4,38 +4,16 @@ DogLanguage é uma linguagem de programação canina que executa diretamente via
 
 ## 🚀 Uso Rápido
 
-Agora DogLanguage é interpretado diretamente em Python - nenhuma compilação necessária!
+DogLanguage é executado diretamente via Python, sem compilação ou arquivos auxiliares.
 
 ```bash
-# Opção 1: Usar o interpretador diretamente
 python3 dog_translator.py main.dog
-
-# Opção 2: Usar o script auxiliar (mais simples)
-python3 dogc.py main.dog
 ```
 
-É isso! ✅ Não precisa mais de C ou compilação!
+## 📂 O que existe neste repositório
 
-### Antes (C):
-```bash
-gcc -o dogc dog_translator.c  # Compilar o tradutor
-./dogc main.dog               # Traduzir para C
-gcc traduzido.c -o programa   # Compilar C
-./programa                    # Executar
-```
-
-### Agora (Python - Direto):
-```bash
-python3 dog_translator.py main.dog  # Executa direto!
-```
-
-## 📂 O que já existe
-
-- ✅ **Interpretador Python** (`dog_translator.py`) - Novo! Executa código .dog diretamente
-- ✅ **Script Auxiliar** (`dogc.py`) - Interface simples para execução
-- ✅ Arquivo de exemplo `main.dog` com demonstração completa
-- ✅ Extensão VS Code em `dog-extension` com gramática TextMate para destaque de sintaxe
-- 📖 **Guia de Migração** (`MIGRACAO_PYTHON.md`) - Histórico da conversão de C para Python
+- ✅ `dog_translator.py` — interpretador Python para arquivos `.dog`
+- ✅ `main.dog` — exemplo de programa DogLanguage
 
 ## Sintaxe básica da linguagem
 
