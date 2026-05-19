@@ -1,0 +1,13 @@
+node_modules/
+*.vsix
+.DS_Store
+.vscode-test/
+out/
+dist/
+build/
+.idea/
+*.swp
+*.swo
+*~
+.env
+.env.local

@@ -2,46 +2,164 @@
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
   "name": "Dog Language",
   "scopeName": "source.dog",
+  "fileTypes": [
+    "dog"
+  ],
   "patterns": [
     {
-      "name": "keyword.control.dog",
-      "match": "\\b(dar_a_pata|ou_fingir_de_morto|focar_no_esquilo|trazer_bolinha|chamar_matilha|matilha|novo|funcao|instinto)\\b"
+      "include": "#comment"
     },
     {
-      "name": "entity.name.function.dog",
-      "match": "\\b(canil|latir|farejar|latir_alto)\\b"
+      "include": "#string"
     },
     {
-      "name": "storage.type.dog",
-      "match": "\\b(pedigree|pelo|carne|raça|pinscher|vira_lata|inteiro|real|texto|booleano)\\b"
+      "include": "#number"
     },
     {
-      "name": "keyword.operator.dog",
-      "match": "\\b(AU|UAU)\\b"
+      "include": "#keyword"
     },
     {
-      "name": "string.quoted.double.dog",
-      "begin": "\"",
-      "end": "\"",
+      "include": "#type"
+    },
+    {
+      "include": "#function"
+    },
+    {
+      "include": "#operator"
+    }
+  ],
+  "repository": {
+    "comment": {
       "patterns": [
         {
-          "name": "constant.character.escape.dog",
-          "match": "\\\\."
+          "name": "comment.line.double-slash.dog",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.dog",
+          "begin": "/\\*",
+          "end": "\\*/"
         }
       ]
     },
-    {
-      "name": "constant.numeric.dog",
-      "match": "\\b\\d+\\b"
+    "string": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.dog",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.dog",
+              "match": "\\\\[\"nrtbf\\\\]"
+            },
+            {
+              "name": "constant.character.escape.dog",
+              "match": "\\\\x[0-9A-Fa-f]{2}"
+            },
+            {
+              "name": "constant.character.escape.dog",
+              "match": "\\\\u[0-9A-Fa-f]{4}"
+            }
+          ]
+        }
+      ]
     },
-    {
-      "name": "comment.line.double-slash.dog",
-      "match": "//.*$"
+    "number": {
+      "patterns": [
+        {
+          "name": "constant.numeric.float.dog",
+          "match": "\\b\\d+\\.\\d+\\b"
+        },
+        {
+          "name": "constant.numeric.integer.dog",
+          "match": "\\b\\d+\\b"
+        }
+      ]
     },
-    {
-      "name": "comment.block.dog",
-      "begin": "/\\*",
-      "end": "\\*/"
+    "keyword": {
+      "patterns": [
+        {
+          "name": "keyword.control.conditional.dog",
+          "match": "\\b(dar_a_pata|ou_fingir_de_morto)\\b"
+        },
+        {
+          "name": "keyword.control.loop.dog",
+          "match": "\\b(focar_no_esquilo)\\b"
+        },
+        {
+          "name": "keyword.control.return.dog",
+          "match": "\\b(trazer_bolinha)\\b"
+        },
+        {
+          "name": "keyword.control.import.dog",
+          "match": "\\b(chamar_matilha)\\b"
+        },
+        {
+          "name": "keyword.control.class.dog",
+          "match": "\\b(matilha|instinto)\\b"
+        },
+        {
+          "name": "keyword.control.function.dog",
+          "match": "\\b(funcao|novo)\\b"
+        },
+        {
+          "name": "keyword.other.block.dog",
+          "match": "\\b(AU|UAU)\\b"
+        },
+        {
+          "name": "constant.language.dog",
+          "match": "\\b(bom_garoto|mal_educado)\\b"
+        }
+      ]
+    },
+    "type": {
+      "patterns": [
+        {
+          "name": "storage.type.primitive.dog",
+          "match": "\\b(pedigree|pelo|carne|raça|pinscher|vira_lata)\\b"
+        },
+        {
+          "name": "storage.type.numeric.dog",
+          "match": "\\b(inteiro|real)\\b"
+        },
+        {
+          "name": "storage.type.string.dog",
+          "match": "\\b(texto)\\b"
+        },
+        {
+          "name": "storage.type.boolean.dog",
+          "match": "\\b(booleano)\\b"
+        }
+      ]
+    },
+    "function": {
+      "patterns": [
+        {
+          "name": "entity.name.function.builtin.dog",
+          "match": "\\b(canil|latir|farejar|latir_alto|latir_baixo|descansar)\\b"
+        }
+      ]
+    },
+    "operator": {
+      "patterns": [
+        {
+          "name": "keyword.operator.comparison.dog",
+          "match": "(==|!=|<=|>=|<|>)"
+        },
+        {
+          "name": "keyword.operator.arithmetic.dog",
+          "match": "(\\+|-|\\*|/|%)"
+        },
+        {
+          "name": "keyword.operator.assignment.dog",
+          "match": "(=)"
+        },
+        {
+          "name": "keyword.operator.logical.dog",
+          "match": "(&&|\\|\\||!)"
+        }
+      ]
     }
-  ]
+  }
 }

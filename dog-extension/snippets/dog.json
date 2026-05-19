@@ -1,0 +1,119 @@
+{
+  "Main Function": {
+    "prefix": "canil",
+    "body": [
+      "canil() AU",
+      "\t$0",
+      "UAU"
+    ],
+    "description": "Cria a função principal (main)"
+  },
+  "Print Statement": {
+    "prefix": "latir",
+    "body": [
+      "latir(\"$1\");$0"
+    ],
+    "description": "Imprime uma mensagem (printf)"
+  },
+  "Variable Declaration": {
+    "prefix": "vira_lata",
+    "body": [
+      "vira_lata $1 = $2;$0"
+    ],
+    "description": "Declara uma variável"
+  },
+  "Integer Variable": {
+    "prefix": "pedigree",
+    "body": [
+      "pedigree $1 = $2;$0"
+    ],
+    "description": "Declara uma variável inteira"
+  },
+  "If Statement": {
+    "prefix": "dar_a_pata",
+    "body": [
+      "dar_a_pata ($1) AU",
+      "\t$2",
+      "UAU$0"
+    ],
+    "description": "Cria um bloco if"
+  },
+  "If-Else Statement": {
+    "prefix": "dar_a_pata_senao",
+    "body": [
+      "dar_a_pata ($1) AU",
+      "\t$2",
+      "UAU ou_fingir_de_morto AU",
+      "\t$3",
+      "UAU$0"
+    ],
+    "description": "Cria um bloco if-else"
+  },
+  "While Loop": {
+    "prefix": "focar_no_esquilo",
+    "body": [
+      "focar_no_esquilo ($1) AU",
+      "\t$2",
+      "UAU$0"
+    ],
+    "description": "Cria um loop while"
+  },
+  "Function": {
+    "prefix": "funcao",
+    "body": [
+      "funcao $1() AU",
+      "\t$2",
+      "UAU$0"
+    ],
+    "description": "Declara uma função"
+  },
+  "Class": {
+    "prefix": "matilha",
+    "body": [
+      "matilha $1 AU",
+      "\tpedigree $2;",
+      "",
+      "\tinstinto($2 valor) AU",
+      "\t\t$3 = valor;",
+      "\tUAU",
+      "UAU$0"
+    ],
+    "description": "Declara uma classe (matilha)"
+  },
+  "Return Statement": {
+    "prefix": "trazer_bolinha",
+    "body": [
+      "trazer_bolinha $1;$0"
+    ],
+    "description": "Retorna um valor (return)"
+  },
+  "Import": {
+    "prefix": "chamar_matilha",
+    "body": [
+      "chamar_matilha <$1>$0"
+    ],
+    "description": "Importa uma biblioteca (include)"
+  },
+  "Block Comment": {
+    "prefix": "comentario",
+    "body": [
+      "/*",
+      " * $1",
+      " */$0"
+    ],
+    "description": "Cria um comentário em bloco"
+  },
+  "Complete Program": {
+    "prefix": "programa",
+    "body": [
+      "// Programa em DogLanguage",
+      "chamar_matilha <brinquedos.h>",
+      "",
+      "canil() AU",
+      "\tlatir(\"Olá, mundo canino!\\\\n\");",
+      "\ttrazer_bolinha 0;",
+      "UAU$0"
+    ],
+    "description": "Template de um programa completo"
+  }
+}

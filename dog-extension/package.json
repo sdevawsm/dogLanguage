@@ -1,20 +1,49 @@
 {
   "name": "dog-lang",
-  "displayName": "Dog Language Support",
-  "description": "Highlight para a linguagem canina Dog",
-  "version": "0.0.1",
+  "displayName": "🐕 Dog Language Support",
+  "description": "Suporte completo para DogLanguage - uma linguagem de programação canina com syntax highlighting, snippets e execução",
+  "version": "0.2.0",
+  "publisher": "dog-lang",
+  "author": "DogLanguage Contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/dogLanguage/dog-language",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dogLanguage/dog-language"
+  },
+  "keywords": [
+    "dog",
+    "programming language",
+    "educational",
+    "esoteric language",
+    "canine"
+  ],
   "engines": {
     "vscode": "^1.50.0"
   },
   "categories": [
-    "Programming Languages"
+    "Programming Languages",
+    "Snippets"
+  ],
+  "main": "./extension.js",
+  "browser": "./extension.js",
+  "icon": null,
+  "activationEvents": [
+    "onLanguage:dog"
   ],
   "contributes": {
     "languages": [
       {
         "id": "dog",
-        "aliases": ["Dog", "dog"],
-        "extensions": [".dog"]
+        "aliases": [
+          "Dog",
+          "dog",
+          "DogLanguage"
+        ],
+        "extensions": [
+          ".dog"
+        ],
+        "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
@@ -22,6 +51,12 @@
         "language": "dog",
         "scopeName": "source.dog",
         "path": "./syntaxes/dog.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "dog",
+        "path": "./snippets/dog.json"
       }
     ]
   }

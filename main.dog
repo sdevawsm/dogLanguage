@@ -1,4 +1,3 @@
-//chamar_matilha <brinquedos.h>
 
 matilha GoldenRetriever AU
     pinscher energia;
@@ -7,22 +6,39 @@ matilha GoldenRetriever AU
         energia = e;
     UAU
 
+    funcao latir_baixo() AU
+        latir("woof...\n");
+    UAU
+
     funcao latir_alto() AU
         latir("WOOF WOOF!\n");
+    UAU
+
+    funcao descansar() AU
+        latir("Rex está descansando...\n");
+        energia = energia + 3;
     UAU
 UAU
 
 funcao canil() AU
-    vira_lata rex = novo GoldenRetriever(10);
+    vira_lata rex = novo GoldenRetriever(2);
 
-    dar_a_pata (rex.energia > 5) AU
-        latir("O Rex quer brincar!\n");
+    dar_a_pata (rex.energia < 3) AU
+        latir("Rex está cansado...\n");
+        rex.descansar();
+    UAU ou_fingir_de_morto AU
+        latir("Rex quer brincar!\n");
+
         focar_no_esquilo (rex.energia > 0) AU
-            latir("Rex correndo...\n");
+            latir("Correndo atrás da bolinha...\n");
             rex.energia = rex.energia - 1;
         UAU
-    UAU ou_fingir_de_morto AU
-        latir("Rex está tirando um cochilo.\n");
+
+        rex.latir_alto();
+    UAU
+
+    dar_a_pata (rex.energia >= 3) AU
+        rex.latir_baixo();
     UAU
 
     trazer_bolinha 0;
