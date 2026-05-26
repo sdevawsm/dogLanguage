@@ -1,0 +1,13 @@
+latir("=== Contador de Ossos ===\n");
+
+pedigree ossos = 1;
+
+focar_no_esquilo (ossos <= 5) AU
+    latir("O cachorro encontrou ");
+    latir(ossos);
+    latir(" osso(s)!\n");
+
+    ossos = ossos + 1;
+UAU
+
+latir("Fim da caça aos ossos!\n");
