@@ -4,12 +4,13 @@ This file documents the color scheme used by the Dog Language extension.
 ## Scopes and Colors
 
 ### Keywords (Control Flow)
-- `keyword.control.conditional.dog` - dar_a_pata, ou_fingir_de_morto (if/else)
-- `keyword.control.loop.dog` - focar_no_esquilo (while)
+- `keyword.control.conditional.dog` - dar_a_pata, se_tiver_petisco, ou_rosnar (if/else)
+- `keyword.control.loop.dog` - focar_no_esquilo, perseguir (while)
 - `keyword.control.return.dog` - trazer_bolinha (return)
 - `keyword.control.import.dog` - chamar_matilha (import)
-- `keyword.control.class.dog` - matilha, instinto (class)
-- `keyword.control.function.dog` - funcao, novo (function/new)
+- `keyword.control.class.dog` - classe, matilha, instinto (class)
+- `keyword.control.function.dog` - funcao, novo, this, eu_mesmo (function/new/self)
+- `keyword.control.exception.dog` - tentar_pegar, fugiu_o_gato (try/catch)
 
 ### Types
 - `storage.type.primitive.dog` - pedigree, pelo, carne, raça, pinscher, vira_lata

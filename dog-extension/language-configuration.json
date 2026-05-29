@@ -22,7 +22,7 @@
     ["\"", "\""]
   ],
   "indentationRules": {
-    "increaseIndentPattern": "^\\s*(AU|funcao|matilha|dar_a_pata|focar_no_esquilo)\\b",
+    "increaseIndentPattern": "^\\s*(AU|funcao|classe|matilha|dar_a_pata|se_tiver_petisco|focar_no_esquilo|perseguir|tentar_pegar)\\b",
     "decreaseIndentPattern": "^\\s*(UAU)\\b"
   }
 }

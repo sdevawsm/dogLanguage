@@ -2,7 +2,7 @@
   "name": "dog-lang",
   "displayName": "🐕 Dog Language Support",
   "description": "Suporte completo para DogLanguage - uma linguagem de programação canina com syntax highlighting, snippets e execução",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publisher": "dog-lang",
   "author": "DogLanguage Contributors",
   "license": "MIT",

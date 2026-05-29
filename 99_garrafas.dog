@@ -1,6 +1,6 @@
 pedigree garrafas = 99;
 
-focar_no_esquilo (garrafas > 0) AU
+perseguir (garrafas > 0) AU
     latir(garrafas);
     latir(" garrafas de cerveja na parede, ");
     latir(garrafas);
@@ -14,3 +14,4 @@ focar_no_esquilo (garrafas > 0) AU
 UAU
 
 latir("Sem mais garrafas de cerveja na parede.\n");
+trazer_bolinha 0;

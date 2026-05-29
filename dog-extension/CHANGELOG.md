@@ -2,6 +2,14 @@
 
 All notable changes to the Dog Language VS Code Extension will be documented in this file.
 
+## [0.2.1] - 2026-05-29
+
+### Added
+- ✨ Suporte estendido para novas keywords DogLanguage
+- 📝 Atualização de snippets e documentação do VS Code
+- 🔧 Auto-indentation para `se_tiver_petisco`, `perseguir`, `tentar_pegar`, `classe`
+- 🎨 Destaque de sintaxe para `ou_rosnar`, `perseguir`, `tentar_pegar`, `fugiu_o_gato`, `classe`, `novo`, `this`, `eu_mesmo`
+
 ## [0.1.0] - 2026-05-19
 
 ### Added

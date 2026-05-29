@@ -81,11 +81,11 @@
       "patterns": [
         {
           "name": "keyword.control.conditional.dog",
-          "match": "\\b(dar_a_pata|ou_fingir_de_morto)\\b"
+          "match": "\\b(dar_a_pata|se_tiver_petisco|ou_fingir_de_morto|ou_rosnar)\\b"
         },
         {
           "name": "keyword.control.loop.dog",
-          "match": "\\b(focar_no_esquilo)\\b"
+          "match": "\\b(focar_no_esquilo|perseguir)\\b"
         },
         {
           "name": "keyword.control.return.dog",
@@ -97,11 +97,15 @@
         },
         {
           "name": "keyword.control.class.dog",
-          "match": "\\b(matilha|instinto)\\b"
+          "match": "\\b(classe|matilha|instinto)\\b"
         },
         {
           "name": "keyword.control.function.dog",
-          "match": "\\b(funcao|novo)\\b"
+          "match": "\\b(funcao|novo|this|eu_mesmo)\\b"
+        },
+        {
+          "name": "keyword.control.exception.dog",
+          "match": "\\b(tentar_pegar|fugiu_o_gato)\\b"
         },
         {
           "name": "keyword.other.block.dog",

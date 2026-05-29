@@ -1,0 +1,19 @@
+matilha Cachorro AU
+
+    pelo nome = "Rex"🐾
+
+    instinto(pelo novo_nome) AU
+        latir("Nome %s \n", novo_nome)🐾
+        eu_mesmo.nome = novo_nome🐾 
+    UAU
+
+    // funcao latir(mensagem) AU
+    //     latir("%s: %s", eu_mesmo.nome, mensagem)🐾
+    // UAU
+
+    funcao obter_nome() AU
+        latir("Meu nome é: %s",  eu_mesmo.nome)🐾
+    UAU
+
+UAU
+

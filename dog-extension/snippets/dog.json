@@ -38,6 +38,15 @@
     ],
     "description": "Cria um bloco if"
   },
+  "If Statement (petisco)": {
+    "prefix": "se_tiver_petisco",
+    "body": [
+      "se_tiver_petisco ($1) AU",
+      "\t$2",
+      "UAU$0"
+    ],
+    "description": "Cria um bloco if usando se_tiver_petisco"
+  },
   "If-Else Statement": {
     "prefix": "dar_a_pata_senao",
     "body": [
@@ -57,6 +66,26 @@
       "UAU$0"
     ],
     "description": "Cria um loop while"
+  },
+  "While Loop (perseguir)": {
+    "prefix": "perseguir",
+    "body": [
+      "perseguir ($1) AU",
+      "\t$2",
+      "UAU$0"
+    ],
+    "description": "Cria um loop enquanto usando perseguir"
+  },
+  "Try/Catch": {
+    "prefix": "tentar_pegar",
+    "body": [
+      "tentar_pegar AU",
+      "\t$1",
+      "UAU fugiu_o_gato AU",
+      "\t$2",
+      "UAU$0"
+    ],
+    "description": "Cria um bloco try/catch"
   },
   "Function": {
     "prefix": "funcao",

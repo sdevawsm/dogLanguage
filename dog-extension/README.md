@@ -35,9 +35,10 @@ cp -r dog-extension ~/.vscode/extensions/dog-lang-0.1.0
 A extensão fornece destaque para:
 
 ### Palavras-chave de Controle
-- `dar_a_pata` (if)
-- `ou_fingir_de_morto` (else)
-- `focar_no_esquilo` (while)
+- `dar_a_pata`, `se_tiver_petisco` (if)
+- `ou_fingir_de_morto`, `ou_rosnar` (else)
+- `focar_no_esquilo`, `perseguir` (while)
+- `tentar_pegar`, `fugiu_o_gato` (try/catch)
 - `trazer_bolinha` (return)
 
 ### Tipos de Dados
@@ -51,6 +52,8 @@ A extensão fornece destaque para:
 - `canil` (main)
 - `latir` (print)
 - `farejar` (input)
+- `novo` (new)
+- `this`, `eu_mesmo` (self)
 
 ### Blocos
 - `AU` (abre bloco {)
@@ -68,9 +71,13 @@ Digite o prefixo e pressione `Tab` para expandir:
 | `pedigree` | Variável inteira | `pedigree x = 5` |
 | `dar_a_pata` | If statement | Condicional |
 | `dar_a_pata_senao` | If-else statement | Condicional com else |
+| `se_tiver_petisco` | If statement | Condicional com petisco |
 | `focar_no_esquilo` | While loop | Loop |
+| `perseguir` | While loop | Loop alternativo |
+| `tentar_pegar` | Try/catch | Bloco de exceção |
 | `funcao` | Função | Função customizada |
 | `matilha` | Classe | Orientação a objetos |
+| `classe` | Classe | Declaração de classe |
 | `trazer_bolinha` | Return | Retorno |
 | `chamar_matilha` | Import | Importação |
 | `programa` | Programa completo | Template |
@@ -152,5 +159,5 @@ Agora você tem todas as ferramentas para programar em Dog com estilo! 🐕
 
 ---
 
-**Versão:** 0.2.0  
-**Última atualização:** 2026-05-19
+**Versão:** 0.2.1  
+**Última atualização:** 2026-05-29
