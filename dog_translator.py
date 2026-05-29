@@ -4,6 +4,7 @@ DogLanguage Interpreter
 Executa código .dog diretamente em Python
 """
 
+import os
 import sys
 
 class Ambiente:
@@ -713,20 +714,28 @@ def executar_comando(cmd, interpreter):
         nome_arquivo = cmd[1]
         if not nome_arquivo.endswith('.dog'):
             nome_arquivo = f"{nome_arquivo}.dog"
+        if not os.path.isabs(nome_arquivo):
+            base_dir = getattr(interpreter, 'current_dir', os.getcwd())
+            nome_arquivo = os.path.normpath(os.path.join(base_dir, nome_arquivo))
         if nome_arquivo in interpreter.imported_files:
             return None
         interpreter.imported_files.add(nome_arquivo)
+        previous_dir = getattr(interpreter, 'current_dir', None)
+        interpreter.current_dir = os.path.dirname(nome_arquivo)
         try:
-            with open(nome_arquivo, 'r', encoding='utf-8') as f:
-                codigo_importado = f.read()
-        except FileNotFoundError:
-            raise RuntimeError(f"Arquivo de import '{nome_arquivo}' não encontrado")
-        tokens_importado = tokenizar(codigo_importado)
-        comandos_importado = parse_programa(tokens_importado)
-        for c in comandos_importado:
-            resultado = executar_comando(c, interpreter)
-            if isinstance(resultado, tuple) and resultado[0] == 'RETURN':
-                break
+            try:
+                with open(nome_arquivo, 'r', encoding='utf-8') as f:
+                    codigo_importado = f.read()
+            except FileNotFoundError:
+                raise RuntimeError(f"Arquivo de import '{nome_arquivo}' não encontrado")
+            tokens_importado = tokenizar(codigo_importado)
+            comandos_importado = parse_programa(tokens_importado)
+            for c in comandos_importado:
+                resultado = executar_comando(c, interpreter)
+                if isinstance(resultado, tuple) and resultado[0] == 'RETURN':
+                    break
+        finally:
+            interpreter.current_dir = previous_dir
         return None
 
     if tipo_cmd == 'CALL':
@@ -766,6 +775,9 @@ def avaliar_expr(expr, interpreter):
                 raise RuntimeError(f"{objeto} não é um objeto para chamar método {destino[2]}")
             if destino in interpreter.builtins:
                 return interpreter.builtins[destino](*args)
+            self_obj = interpreter.ambiente_atual.get('eu_mesmo') or interpreter.ambiente_atual.get('this')
+            if isinstance(self_obj, DogInstance) and self_obj.dog_class.get_metodo(destino):
+                return self_obj.call_method(destino, args, interpreter)
             return interpreter.call_function(destino, args)
 
         if expr[0] == 'NEW':
@@ -806,7 +818,7 @@ def avaliar_expr(expr, interpreter):
     return 0
 
 
-def executar(codigo_dog):
+def executar(codigo_dog, arquivo=None):
     try:
         linhas_limpas = []
         for linha in codigo_dog.split('\n'):
@@ -817,6 +829,10 @@ def executar(codigo_dog):
         tokens = tokenizar(codigo)
         comandos = parse_programa(tokens)
         interpreter = DogInterpreter()
+        if arquivo:
+            interpreter.current_dir = os.path.dirname(os.path.abspath(arquivo))
+        else:
+            interpreter.current_dir = os.getcwd()
         for cmd in comandos:
             resultado = executar_comando(cmd, interpreter)
             if isinstance(resultado, tuple) and resultado[0] == 'RETURN':
@@ -843,7 +859,7 @@ def main():
     except FileNotFoundError:
         print(f"❌ Erro: arquivo '{arquivo}' não encontrado", file=sys.stderr)
         sys.exit(1)
-    executar(codigo_dog)
+    executar(codigo_dog, arquivo)
 
 if __name__ == "__main__":
     main()

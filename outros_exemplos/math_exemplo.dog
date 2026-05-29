@@ -1,0 +1,17 @@
+chamar_matilha math
+
+funcao canil() AU
+    vira_lata calculadora = novo math();
+
+    pedigree n = 5🐾
+    pedigree a = 12🐾
+    pedigree b = 8🐾
+
+    latir("Fatorial de %d = %d\n", n, calculadora.calcular_fatorial(n))🐾
+    latir("Fibonacci de %d = %d\n", n, calculadora.calcular_fibonacci(n))🐾
+    latir("Potência: 2^%d = %d\n", n, calculadora.calcular_potencia(2, n))🐾
+    latir("MDC de %d e %d = %d\n", a, b, calculadora.calcular_mdc(a, b))🐾
+    latir("MMC de %d e %d = %d\n", a, b, calculadora.calcular_mmc(a, b))🐾
+
+    trazer_bolinha 0🐾
+UAU

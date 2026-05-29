@@ -37,16 +37,29 @@ UAU
 
 
 
+
+uivar soma (a, b) AU
+    trazer_bolinha a + b🐾
+UAU
+
+
+
+
 uivar canil() AU
 
    latir("Bem-vindo ao canil!\n")🐾
 
 
     vira_lata rex = novo Cachorro("Caramelo")🐾
-    vira_lata jerry = novo Cachorro("Jerry")🐾
+    vira_lata jerry = novo Pinscher("Jerry")🐾
 
 
     rex.comer()🐾
     jerry.comer()🐾
+    jerry.aparencia()🐾
+
+
+    latir("A soma de 5 e 7 é: %d\n", soma(5, 7))🐾 
+
 
 UAU

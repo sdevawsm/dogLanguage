@@ -14,6 +14,9 @@ python3 dog_translator.py main.dog
 
 - ✅ `dog_translator.py` — interpretador Python para arquivos `.dog`
 - ✅ `main.dog` — exemplo de programa DogLanguage
+- ✅ `outros_exemplos/impar_par.dog` — exemplo de controle de fluxo e classes
+- ✅ `outros_exemplos/math.dog` — biblioteca matemática simples
+- ✅ `outros_exemplos/math_exemplo.dog` — exemplo de uso da biblioteca matemática
 
 ## Sintaxe básica da linguagem
 
@@ -27,7 +30,7 @@ trazer_bolinha 0;
 
 ### Palavras-chave suportadas
 
-- `chamar_matilha` → `#include` (não faz nada no interpretador atual)
+- `chamar_matilha` → importa um arquivo `.dog` como biblioteca/módulo
 - `AU` → `{`
 - `UAU` → `}`
 - `latir` → `printf`
@@ -37,6 +40,8 @@ trazer_bolinha 0;
 - `pelo` → texto (`string`)
 - `carne` → ponto flutuante (`float`)
 - `raça` → ponto flutuante (`double`)
+- `uivar` → define uma função dentro de uma classe (alias de `funcao`)
+- `instinto` → construtor de classe
 - `dar_a_pata` → `if`
 - `ou_fingir_de_morto` → `else`
 - `focar_no_esquilo` → `while`

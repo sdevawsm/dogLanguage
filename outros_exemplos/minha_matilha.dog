@@ -1,16 +1,26 @@
-matilha Cachorro AU
-
-    pelo nome = "Rex"🐾
-
-    instinto(pelo novo_nome) AU
-        latir("Nome %s \n", novo_nome)🐾
-        nome = novo_nome🐾 
+//Essa é uma biblioteca de exemplo, que define uma matilha de cães. Ela pode ser usada para criar instâncias de cachorros, atribuir nomes a eles e fazer com que eles comam.
+matilha Animal AU
+    uivar comer() AU
+        latir("Está comendo...\n") 🐾
     UAU
-
-
-    funcao obter_nome() AU
-        latir("Meu nome é: %s \n",  nome)🐾
-    UAU
-
 UAU
 
+
+matilha Cachorro segue Animal AU
+
+    pelo nome🐾
+
+    instinto(pelo novo_nome) AU
+        eu_mesmo.nome = novo_nome🐾 
+    UAU
+
+    funcao obter_nome() AU
+        latir("Meu nome é: %s \n",  eu_mesmo.nome)🐾
+    UAU
+
+    uivar comer() AU
+        latir("%s está comendo...\n", eu_mesmo.nome) 🐾
+    UAU
+
+
+UAU

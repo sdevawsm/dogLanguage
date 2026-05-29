@@ -1,4 +1,4 @@
-
+//calcular se um número é par ou ímpar
 
 funcao canil() AU
 
@@ -7,10 +7,10 @@ funcao canil() AU
     focar_no_esquilo (x  <  10) AU
 
         dar_a_pata(x%2 == 0) AU
-            latir("x é par\n")🐾
+            latir("%s é par\n", x)🐾
             x = x + 1🐾
         UAU ou_fingir_de_morto AU
-            latir("x é ímpar\n")🐾
+            latir("%s é ímpar\n", x)🐾
             x = x + 1🐾
         UAU
         

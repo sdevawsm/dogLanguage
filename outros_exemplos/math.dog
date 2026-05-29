@@ -1,0 +1,39 @@
+//biblioteca de funções matemáticas
+matilha math AU
+    funcao calcular_fatorial(raça n) AU
+        dar_a_pata (n == 0) AU
+            trazer_bolinha 1;
+        UAU
+        trazer_bolinha n * calcular_fatorial(n - 1);
+    UAU
+
+    funcao calcular_fibonacci(raça n) AU
+        dar_a_pata (n == 0) AU
+            trazer_bolinha 0;
+        UAU
+        dar_a_pata (n == 1) AU
+            trazer_bolinha 1;
+        UAU
+        trazer_bolinha calcular_fibonacci(n - 1) + calcular_fibonacci(n - 2);
+    UAU
+
+    funcao calcular_potencia(raça base, raça expoente) AU
+        dar_a_pata (expoente == 0) AU
+            trazer_bolinha 1;
+        UAU
+        trazer_bolinha base * calcular_potencia(base, expoente - 1);
+    UAU
+
+    funcao calcular_mdc(raça a, raça b) AU
+        dar_a_pata (b == 0) AU
+            trazer_bolinha a;
+        UAU
+        trazer_bolinha calcular_mdc(b, a % b);
+    UAU
+
+    funcao calcular_mmc(raça a, raça b) AU
+        trazer_bolinha (a * b) / calcular_mdc(a, b);
+    UAU
+UAU
+
+
