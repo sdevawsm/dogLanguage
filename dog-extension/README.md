@@ -55,6 +55,12 @@ A extensão fornece destaque para:
 - `novo` (new)
 - `this`, `eu_mesmo` (self)
 
+### Declaração de Função
+- `funcao` ou `latido`
+
+### Herança
+- `extende` ou `segue`
+
 ### Blocos
 - `AU` (abre bloco {)
 - `UAU` (fecha bloco })
@@ -76,8 +82,12 @@ Digite o prefixo e pressione `Tab` para expandir:
 | `perseguir` | While loop | Loop alternativo |
 | `tentar_pegar` | Try/catch | Bloco de exceção |
 | `funcao` | Função | Função customizada |
+| `uivar` | Função | Função customizada (alias temático) |
+| `latido` | Função | Função customizada (alias retrocompatível) |
 | `matilha` | Classe | Orientação a objetos |
 | `classe` | Classe | Declaração de classe |
+| `matilha_extende` | Classe com herança | Herança entre classes |
+| `matilha_segue` | Classe com herança | Herança entre classes (alias temático) |
 | `trazer_bolinha` | Return | Retorno |
 | `chamar_matilha` | Import | Importação |
 | `programa` | Programa completo | Template |

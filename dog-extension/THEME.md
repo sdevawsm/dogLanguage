@@ -9,7 +9,7 @@ This file documents the color scheme used by the Dog Language extension.
 - `keyword.control.return.dog` - trazer_bolinha (return)
 - `keyword.control.import.dog` - chamar_matilha (import)
 - `keyword.control.class.dog` - classe, matilha, instinto (class)
-- `keyword.control.function.dog` - funcao, novo, this, eu_mesmo (function/new/self)
+- `keyword.control.function.dog` - funcao, latido, novo, this, eu_mesmo (function/new/self)
 - `keyword.control.exception.dog` - tentar_pegar, fugiu_o_gato (try/catch)
 
 ### Types

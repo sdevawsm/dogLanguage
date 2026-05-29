@@ -96,6 +96,24 @@
     ],
     "description": "Declara uma função"
   },
+  "Function (uivar)": {
+    "prefix": "uivar",
+    "body": [
+      "uivar $1() AU",
+      "\t$2",
+      "UAU$0"
+    ],
+    "description": "Declara uma função com keyword uivar"
+  },
+  "Function (latido)": {
+    "prefix": "latido",
+    "body": [
+      "latido $1() AU",
+      "\t$2",
+      "UAU$0"
+    ],
+    "description": "Declara uma função com keyword latido"
+  },
   "Class": {
     "prefix": "matilha",
     "body": [
@@ -121,6 +139,19 @@
       "UAU$0"
     ],
     "description": "Declara uma classe que estende outra (herança)"
+  },
+  "Inherited Class (segue)": {
+    "prefix": "matilha_segue",
+    "body": [
+      "matilha $1 AU segue $2",
+      "\tpedigree $3;",
+      "",
+      "\tinstinto($3 valor) AU",
+      "\t\t$4 = valor;",
+      "\tUAU",
+      "UAU$0"
+    ],
+    "description": "Declara uma classe que segue outra (herança)"
   },
   "Return Statement": {
     "prefix": "trazer_bolinha",

@@ -101,11 +101,11 @@
         },
         {
           "name": "keyword.control.inheritance.dog",
-          "match": "\\b(extende)\\b"
+          "match": "\\b(extende|segue)\\b"
         },
         {
           "name": "keyword.control.function.dog",
-          "match": "\\b(funcao|novo|this|eu_mesmo)\\b"
+          "match": "\\b(funcao|uivar|latido|novo|this|eu_mesmo)\\b"
         },
         {
           "name": "keyword.control.exception.dog",

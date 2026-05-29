@@ -242,6 +242,8 @@ def tokenizar(codigo):
                 'raça': 'TYPE',
                 'pinscher': 'TYPE',
                 'funcao': 'FUNC',
+                'uivar': 'FUNC',
+                'latido': 'FUNC',
                 'matilha': 'CLASS',
                 'classe': 'CLASS',
                 'novo': 'NEW',
@@ -258,6 +260,7 @@ def tokenizar(codigo):
                 'trazer_bolinha': 'RETURN',
                 'chamar_matilha': 'IMPORT',
                 'extende': 'EXTENDS',
+                'segue': 'EXTENDS',
             }
             tokens.append((palavras_chave_map.get(palavra, 'ID'), palavra))
             i = j
