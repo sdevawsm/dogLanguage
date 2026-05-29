@@ -1,6 +1,12 @@
 chamar_matilha math
 
-funcao canil() AU
+
+uivar soma (a, b) AU
+    trazer_bolinha a + b🐾
+UAU
+
+
+uivar canil() AU
     vira_lata calculadora = novo math();
 
     pedigree n = 5🐾
@@ -12,6 +18,8 @@ funcao canil() AU
     latir("Potência: 2^%d = %d\n", n, calculadora.calcular_potencia(2, n))🐾
     latir("MDC de %d e %d = %d\n", a, b, calculadora.calcular_mdc(a, b))🐾
     latir("MMC de %d e %d = %d\n", a, b, calculadora.calcular_mmc(a, b))🐾
+
+    latir("A soma de 5 e 7 é: %d\n", soma(5, 7))🐾 
 
     trazer_bolinha 0🐾
 UAU

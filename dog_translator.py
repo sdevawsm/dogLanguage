@@ -465,7 +465,7 @@ def parse_programa(tokens):
 
     def parse_atribuicao():
         expr = parse_equality()
-        if atual() and atual()[1] == '=' and isinstance(expr, tuple) and expr[0] in ('VAR', 'FIELD'):
+        if atual() and atual()[1] == '=' and isinstance(expr, tuple) and expr[0] in ('VAR', 'FIELD', 'INDEX'):
             proximo()
             valor = parse_atribuicao()
             return ('ASSIGN', expr, valor)
@@ -522,6 +522,44 @@ def parse_programa(tokens):
         if not token:
             return 0
 
+        def parse_postfix(expr):
+            while atual() and atual()[1] in ('.', '['):
+                if atual()[1] == '.':
+                    proximo()
+                    atributo = consume('ID')
+                    if not atributo:
+                        break
+                    if atual() and atual()[1] == '(':
+                        proximo()
+                        args = []
+                        while atual() and atual()[1] != ')':
+                            args.append(parse_expressao())
+                            if atual() and atual()[1] == ',':
+                                proximo()
+                        if atual() and atual()[1] == ')':
+                            proximo()
+                        expr = ('CALL', ('FIELD', expr, atributo[1]), args)
+                    else:
+                        expr = ('FIELD', expr, atributo[1])
+                else:
+                    proximo()
+                    index = parse_expressao()
+                    if atual() and atual()[1] == ']':
+                        proximo()
+                    expr = ('INDEX', expr, index)
+            return expr
+
+        if token[1] == '[':
+            proximo()
+            elements = []
+            while atual() and atual()[1] != ']':
+                elements.append(parse_expressao())
+                if atual() and atual()[1] == ',':
+                    proximo()
+            if atual() and atual()[1] == ']':
+                proximo()
+            return parse_postfix(('ARRAY', elements))
+
         if token[0] == 'NUMERO':
             proximo()
             return token[1]
@@ -533,24 +571,7 @@ def parse_programa(tokens):
         if token[0] == 'SELF':
             proximo()
             expr = ('SELF',)
-            while atual() and atual()[1] == '.':
-                proximo()
-                atributo = consume('ID')
-                if not atributo:
-                    break
-                if atual() and atual()[1] == '(':
-                    proximo()
-                    args = []
-                    while atual() and atual()[1] != ')':
-                        args.append(parse_expressao())
-                        if atual() and atual()[1] == ',':
-                            proximo()
-                    if atual() and atual()[1] == ')':
-                        proximo()
-                    expr = ('CALL', ('FIELD', expr, atributo[1]), args)
-                else:
-                    expr = ('FIELD', expr, atributo[1])
-            return expr
+            return parse_postfix(expr)
 
         if token[0] == 'NEW':
             proximo()
@@ -580,25 +601,7 @@ def parse_programa(tokens):
                 if atual() and atual()[1] == ')':
                     proximo()
                 expr = ('CALL', nome, args)
-
-            while atual() and atual()[1] == '.':
-                proximo()
-                atributo = consume('ID')
-                if not atributo:
-                    break
-                if atual() and atual()[1] == '(':
-                    proximo()
-                    args = []
-                    while atual() and atual()[1] != ')':
-                        args.append(parse_expressao())
-                        if atual() and atual()[1] == ',':
-                            proximo()
-                    if atual() and atual()[1] == ')':
-                        proximo()
-                    expr = ('CALL', ('FIELD', expr, atributo[1]), args)
-                else:
-                    expr = ('FIELD', expr, atributo[1])
-            return expr
+            return parse_postfix(expr)
 
         if token[1] == '(':
             proximo()
@@ -643,6 +646,16 @@ def executar_comando(cmd, interpreter):
                 base[alvo[2]] = valor
                 return None
             raise RuntimeError(f"Não é possível atribuir campo em {base}")
+        if alvo[0] == 'INDEX':
+            base = avaliar_expr(alvo[1], interpreter)
+            indice = avaliar_expr(alvo[2], interpreter)
+            if isinstance(base, list):
+                base[indice] = valor
+                return None
+            if isinstance(base, dict):
+                base[indice] = valor
+                return None
+            raise RuntimeError(f"Não é possível atribuir índice em {base}")
 
     if tipo_cmd == 'IF':
         condicao, bloco, else_bloco = cmd[1], cmd[2], cmd[3]
@@ -765,6 +778,9 @@ def avaliar_expr(expr, interpreter):
         if expr[0] == 'SELF':
             return interpreter.ambiente_atual.get('eu_mesmo') or interpreter.ambiente_atual.get('this')
 
+        if expr[0] == 'ARRAY':
+            return [avaliar_expr(item, interpreter) for item in expr[1]]
+
         if expr[0] == 'CALL':
             destino = expr[1]
             args = [avaliar_expr(arg, interpreter) for arg in expr[2]]
@@ -779,6 +795,23 @@ def avaliar_expr(expr, interpreter):
             if isinstance(self_obj, DogInstance) and self_obj.dog_class.get_metodo(destino):
                 return self_obj.call_method(destino, args, interpreter)
             return interpreter.call_function(destino, args)
+
+        if expr[0] == 'INDEX':
+            base = avaliar_expr(expr[1], interpreter)
+            indice = avaliar_expr(expr[2], interpreter)
+            if isinstance(base, list):
+                try:
+                    return base[indice]
+                except Exception:
+                    return 0
+            if isinstance(base, dict):
+                return base.get(indice, 0)
+            if isinstance(base, str):
+                try:
+                    return base[indice]
+                except Exception:
+                    return ''
+            return 0
 
         if expr[0] == 'NEW':
             nome_classe = expr[1]

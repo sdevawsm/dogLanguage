@@ -1,9 +1,10 @@
 
+//Classe GoldenRetriever com energia e métodos de latir e descansar
 matilha GoldenRetriever AU
     pinscher energia;
 
     instinto(pinscher e) AU
-        energia = e;
+        eu_mesmo.energia = e;
     UAU
 
     funcao latir_baixo() AU
@@ -16,11 +17,36 @@ matilha GoldenRetriever AU
 
     funcao descansar() AU
         latir("Rex está descansando...\n");
-        energia = energia + 3;
+        eu_mesmo.energia = eu_mesmo.energia + 3;
     UAU
 UAU
 
-funcao canil() AU
+
+
+uivar canil() AU
+    //tipos de dados
+    pedigree idade = 3🐾
+    carne altura = 0.5🐾
+    raça peso = 2.5🐾
+    pelo nome = "Rex"🐾
+
+   
+    latir("Idade: %d anos\n", idade)🐾
+    latir("Altura: %.1f metros\n", altura)🐾
+    latir("Peso: %.1f kg\n", peso)🐾
+    latir("Nome: %s\n", nome)🐾
+    latir("\n\n")🐾
+
+    //Dados de entrada
+    latir("Qual seu nome? ")🐾
+    pelo nome = farejar()🐾
+    latir("Olá, %s!\n", nome)🐾
+    latir("\n\n")🐾
+
+
+
+
+    // Exemplo de uso da classe GoldenRetriever
     vira_lata rex = novo GoldenRetriever(2);
 
     dar_a_pata (rex.energia < 3) AU
@@ -41,5 +67,11 @@ funcao canil() AU
         rex.latir_baixo();
     UAU
 
+
+
+
+
+
+    //return 0;
     trazer_bolinha 0;
 UAU

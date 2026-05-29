@@ -1,0 +1,11 @@
+funcao canil() AU
+    vira_lata numeros = [1, 2, 3, 4];
+    
+    latir("Primeiro elemento: %d\n", numeros[0]);
+    latir("Segundo elemento: %d\n", numeros[1]);
+
+    numeros[2] = 10;
+    latir("Terceiro elemento atualizado: %d\n", numeros[2]);
+
+    trazer_bolinha 0;
+UAU

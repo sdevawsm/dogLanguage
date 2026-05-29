@@ -38,9 +38,6 @@ UAU
 
 
 
-uivar soma (a, b) AU
-    trazer_bolinha a + b🐾
-UAU
 
 
 
@@ -52,14 +49,26 @@ uivar canil() AU
 
     vira_lata rex = novo Cachorro("Caramelo")🐾
     vira_lata jerry = novo Pinscher("Jerry")🐾
+    vira_lata pingo_de_gente = novo Pinscher("Pingo")🐾
+    vira_lata poodle = novo Cachorro("poodle")🐾
+
+    // Criando um array de animais
+    vira_lata animais = [rex, jerry, pingo_de_gente, poodle]🐾
 
 
-    rex.comer()🐾
-    jerry.comer()🐾
-    jerry.aparencia()🐾
+    animais[0].obter_nome()🐾
+    animais[1].obter_nome()🐾
+    animais[2].obter_nome()🐾
+    animais[3].obter_nome()🐾
+
+    // rex.comer()🐾
+    // jerry.comer()🐾
+    // jerry.aparencia()🐾
+    // pingo_de_gente.aparencia()🐾
+    // poodle.comer()🐾
 
 
-    latir("A soma de 5 e 7 é: %d\n", soma(5, 7))🐾 
-
+    //return 0;
+    trazer_bolinha 0🐾
 
 UAU
