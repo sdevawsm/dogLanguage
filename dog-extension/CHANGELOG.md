@@ -2,6 +2,14 @@
 
 All notable changes to the Dog Language VS Code Extension will be documented in this file.
 
+## [0.2.2] - 2026-05-29
+
+### Added
+- ✨ Suporte para herança com `extende` keyword
+- 📝 Novo snippet `matilha_extende` para classes com herança
+- 🎨 Destaque de sintaxe para `extende`
+- 🔍 Classe pai agora corretamente colorida como keyword de herança
+
 ## [0.2.1] - 2026-05-29
 
 ### Added

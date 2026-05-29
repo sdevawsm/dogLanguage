@@ -28,10 +28,6 @@ class Ambiente:
             valor = self.pai.get(nome)
             if valor is not None:
                 return valor
-        if nome in ('eu_mesmo', 'this'):
-            return None
-        if 'eu_mesmo' in self.variaveis and isinstance(self.variaveis['eu_mesmo'], DogInstance):
-            return self.variaveis['eu_mesmo'].get(nome)
         return None
 
     def existe(self, nome):
@@ -42,8 +38,9 @@ class Ambiente:
         return False
 
 class DogClass:
-    def __init__(self, nome, campos, metodos):
+    def __init__(self, nome, campos, metodos, classe_pai=None):
         self.nome = nome
+        self.classe_pai = classe_pai
         self.campos = {nome_campo: (valor if valor is not None else 0) for nome_campo, valor in campos}
         self.metodos = {}
         self.constructor = None
@@ -52,11 +49,27 @@ class DogClass:
                 self.constructor = (params, corpo)
             else:
                 self.metodos[nome_metodo] = (params, corpo)
+    
+    def get_metodo(self, nome):
+        """Busca método na classe ou em suas superclasses"""
+        if nome in self.metodos:
+            return self.metodos[nome]
+        if self.classe_pai:
+            return self.classe_pai.get_metodo(nome)
+        return None
+    
+    def get_campos_herdados(self):
+        """Retorna todos os campos incluindo os herdados"""
+        campos = {}
+        if self.classe_pai:
+            campos.update(self.classe_pai.get_campos_herdados())
+        campos.update(self.campos)
+        return campos
 
 class DogInstance:
     def __init__(self, dog_class):
         self.dog_class = dog_class
-        self.fields = dict(dog_class.campos)
+        self.fields = dict(dog_class.get_campos_herdados())
 
     def get(self, nome):
         return self.fields.get(nome, 0)
@@ -65,9 +78,10 @@ class DogInstance:
         self.fields[nome] = valor
 
     def call_method(self, nome, args, interpreter):
-        if nome not in self.dog_class.metodos:
+        metodo_info = self.dog_class.get_metodo(nome)
+        if not metodo_info:
             raise RuntimeError(f"Método '{nome}' não encontrado em {self.dog_class.nome}")
-        params, corpo = self.dog_class.metodos[nome]
+        params, corpo = metodo_info
         env = Ambiente(interpreter.ambiente_global)
         env.set('eu_mesmo', self)
         env.set('this', self)
@@ -243,6 +257,7 @@ def tokenizar(codigo):
                 'fugiu_o_gato': 'CATCH',
                 'trazer_bolinha': 'RETURN',
                 'chamar_matilha': 'IMPORT',
+                'extende': 'EXTENDS',
             }
             tokens.append((palavras_chave_map.get(palavra, 'ID'), palavra))
             i = j
@@ -381,12 +396,23 @@ def parse_programa(tokens):
         if token[0] == 'CLASS':
             proximo()
             nome = consume('ID')
+            classe_pai = None
+            # Skip 'AU' if it comes right after the class name
+            if atual() and atual()[1] == 'AU':
+                proximo()
+            # Now check for 'extende'
+            if atual() and atual()[0] == 'EXTENDS':
+                proximo()
+                pai_token = consume('ID')
+                if pai_token:
+                    classe_pai = pai_token[1]
+            # Skip another 'AU' if present
             if atual() and atual()[1] == 'AU':
                 proximo()
             corpo = parse_class_body()
             if atual() and atual()[1] == 'UAU':
                 proximo()
-            return ('CLASS_DEF', nome[1] if nome else None, corpo)
+            return ('CLASS_DEF', nome[1] if nome else None, corpo, classe_pai)
 
         if token[0] == 'IF':
             proximo()
@@ -502,7 +528,25 @@ def parse_programa(tokens):
 
         if token[0] == 'SELF':
             proximo()
-            return ('SELF',)
+            expr = ('SELF',)
+            while atual() and atual()[1] == '.':
+                proximo()
+                atributo = consume('ID')
+                if not atributo:
+                    break
+                if atual() and atual()[1] == '(':
+                    proximo()
+                    args = []
+                    while atual() and atual()[1] != ')':
+                        args.append(parse_expressao())
+                        if atual() and atual()[1] == ',':
+                            proximo()
+                    if atual() and atual()[1] == ')':
+                        proximo()
+                    expr = ('CALL', ('FIELD', expr, atributo[1]), args)
+                else:
+                    expr = ('FIELD', expr, atributo[1])
+            return expr
 
         if token[0] == 'NEW':
             proximo()
@@ -643,6 +687,7 @@ def executar_comando(cmd, interpreter):
 
     if tipo_cmd == 'CLASS_DEF':
         nome, corpo = cmd[1], cmd[2]
+        classe_pai = cmd[3] if len(cmd) > 3 else None
         campos = []
         metodos = []
         for item in corpo:
@@ -650,7 +695,15 @@ def executar_comando(cmd, interpreter):
                 campos.append((item[1], item[2]))
             elif item and item[0] == 'FUNC_DEF':
                 metodos.append((item[1], item[2], item[3]))
-        interpreter.classes[nome] = DogClass(nome, campos, metodos)
+        
+        # Busca referência da classe pai se existir
+        classe_pai_obj = None
+        if classe_pai:
+            if classe_pai not in interpreter.classes:
+                raise RuntimeError(f"Classe pai '{classe_pai}' não encontrada")
+            classe_pai_obj = interpreter.classes[classe_pai]
+        
+        interpreter.classes[nome] = DogClass(nome, campos, metodos, classe_pai_obj)
         return None
 
     if tipo_cmd == 'IMPORT':

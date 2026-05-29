@@ -1,4 +1,30 @@
-chamar_matilha minha_matilha 🐾
+// chamar_matilha minha_matilha 🐾
+
+
+matilha Animal AU
+    funcao latir(mensagem) AU
+        latir(mensagem);
+    UAU
+UAU
+
+
+
+matilha Cachorro AU extende Animal
+
+    pelo nome = "Rex"🐾
+
+    instinto(pelo novo_nome) AU
+        latir("Nome %s \n", novo_nome)🐾
+        eu_mesmo.nome = novo_nome🐾 
+    UAU
+
+
+    funcao obter_nome() AU
+        latir("Meu nome é: %s \n",  eu_mesmo.nome)🐾
+    UAU
+
+UAU
+
 
 
 funcao canil() AU
@@ -8,7 +34,7 @@ funcao canil() AU
 
     vira_lata rex = novo Cachorro("Caramelo")🐾
 
-    rex.latir(" está latindo...\n")🐾
+    rex.latir("está latindo...\n")🐾
     rex.obter_nome()🐾
 
 UAU

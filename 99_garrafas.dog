@@ -1,17 +1,17 @@
-pedigree garrafas = 99;
+pedigree garrafas = 99🐾
 
 perseguir (garrafas > 0) AU
-    latir(garrafas);
-    latir(" garrafas de cerveja na parede, ");
-    latir(garrafas);
-    latir(" garrafas de cerveja.\n");
+    latir(garrafas)🐾
+    latir(" garrafas de cerveja na parede, ")🐾
+    latir(garrafas)🐾
+    latir(" garrafas de cerveja.\n")🐾
 
-    latir("Pegue uma, passe adiante, ");
-    latir(garrafas - 1);
-    latir(" garrafas de cerveja na parede.\n\n");
+    latir("Pegue uma, passe adiante, ")🐾
+    latir(garrafas - 1)🐾
+    latir(" garrafas de cerveja na parede.\n\n")🐾
 
-    garrafas = garrafas - 1;
+    garrafas = garrafas - 1🐾
 UAU
 
-latir("Sem mais garrafas de cerveja na parede.\n");
-trazer_bolinha 0;
+latir("Sem mais garrafas de cerveja na parede.\n")🐾
+trazer_bolinha 0🐾

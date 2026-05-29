@@ -109,6 +109,19 @@
     ],
     "description": "Declara uma classe (matilha)"
   },
+  "Inherited Class": {
+    "prefix": "matilha_extende",
+    "body": [
+      "matilha $1 AU extende $2",
+      "\tpedigree $3;",
+      "",
+      "\tinstinto($3 valor) AU",
+      "\t\t$4 = valor;",
+      "\tUAU",
+      "UAU$0"
+    ],
+    "description": "Declara uma classe que estende outra (herança)"
+  },
   "Return Statement": {
     "prefix": "trazer_bolinha",
     "body": [
