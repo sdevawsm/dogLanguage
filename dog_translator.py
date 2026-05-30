@@ -2,6 +2,22 @@
 """
 DogLanguage Interpreter
 Executa código .dog diretamente em Python
+
+Este tradutor lê código escrito na linguagem DogLanguage, tokeniza o texto, analisa a
+estrutura sintática em comandos internos e interpreta cada comando em tempo de execução.
+
+O fluxo principal é:
+1. limpar comentários de linha do código DogLanguage;
+2. converter o texto em tokens léxicos com a função tokenizar;
+3. parsear esses tokens em uma árvore simples de comandos com parse_programa;
+4. executar os comandos usando um interpretador que mantém escopos, funções,
+   classes e instâncias;
+5. oferecer suporte a importações de arquivos, controle de fluxo, métodos de classe,
+   expressões, arrays, índices e casts básicos.
+
+A implementação usa classes internas para representar ambientes (escopos), classes DogLanguage,
+instâncias e o próprio interpretador, mantendo a semântica da linguagem Dog com suporte
+a comandos como 'latir', 'farejar', 'pedigree' e construção de objetos.
 """
 
 import os
@@ -9,11 +25,15 @@ import sys
 
 class Ambiente:
     """Representa o ambiente de execução com variáveis"""
+    # Cada ambiente pode ter um pai para formar uma cadeia de escopo.
+    # Variáveis são procuradas primeiro no escopo atual e depois nos escopos ancestrais.
     def __init__(self, pai=None):
         self.pai = pai
         self.variaveis = {}
 
     def set(self, nome, valor):
+        # Atribui um valor a uma variável no escopo atual.
+        # Se a variável existir em um escopo pai, atualiza lá em vez de criar no escopo atual.
         if nome in self.variaveis:
             self.variaveis[nome] = valor
             return
@@ -39,6 +59,7 @@ class Ambiente:
         return False
 
 class DogClass:
+    # Representa uma definição de classe em DogLanguage, armazenando campos, métodos e herança.
     def __init__(self, nome, campos, metodos, classe_pai=None):
         self.nome = nome
         self.classe_pai = classe_pai
@@ -53,6 +74,7 @@ class DogClass:
     
     def get_metodo(self, nome):
         """Busca método na classe ou em suas superclasses"""
+        # Se não encontrar o método na classe atual, pesquisa recursivamente na classe pai.
         if nome in self.metodos:
             return self.metodos[nome]
         if self.classe_pai:
@@ -68,6 +90,7 @@ class DogClass:
         return campos
 
 class DogInstance:
+    # Representa uma instância de uma classe DogLanguage, com seus próprios campos e acesso a métodos.
     def __init__(self, dog_class):
         self.dog_class = dog_class
         self.fields = dict(dog_class.get_campos_herdados())
@@ -79,6 +102,7 @@ class DogInstance:
         self.fields[nome] = valor
 
     def call_method(self, nome, args, interpreter):
+        # Executa um método de instância, criando um escopo temporário para a chamada.
         metodo_info = self.dog_class.get_metodo(nome)
         if not metodo_info:
             raise RuntimeError(f"Método '{nome}' não encontrado em {self.dog_class.nome}")
@@ -102,6 +126,7 @@ class DogInstance:
 class DogInterpreter:
     """Interpretador da linguagem Dog"""
 
+    # Mantém o estado global da interpretação, incluindo funções, classes, escopos e arquivos importados.
     def __init__(self):
         self.ambiente_global = Ambiente()
         self.ambiente_atual = self.ambiente_global
@@ -119,6 +144,7 @@ class DogInterpreter:
         }
 
     def latir(self, *args):
+        # Função built-in equivalente a print, com suporte a formatação e escape de nova linha.
         if not args:
             print()
             return
@@ -135,6 +161,7 @@ class DogInterpreter:
             print(formato.replace('\\n', '\n'), end='')
 
     def farejar(self, prompt=""):
+        # Função built-in que lê entrada do usuário, opcionalmente exibindo um prompt.
         try:
             if prompt:
                 prompt_str = str(prompt).replace('\\n', '\n')
@@ -159,6 +186,7 @@ class DogInterpreter:
             return 0.0
 
     def call_function(self, nome, args):
+        # Chama uma função definida pelo usuário, criando um novo escopo para parâmetros e execução.
         if nome not in self.functions:
             return 0
         params, corpo = self.functions[nome]
@@ -202,6 +230,8 @@ class DogInterpreter:
 
 def tokenizar(codigo):
     """Tokeniza o código Dog"""
+    # Converte o texto fonte em uma lista sequencial de tokens que representam palavras-chave,
+    # literais e operadores, usada pelo parser para construir a estrutura de comandos.
     tokens = []
     i = 0
 
@@ -285,6 +315,8 @@ def tokenizar(codigo):
 
 
 def parse_programa(tokens):
+    # Constrói uma representação interna do programa DogLanguage em comandos e expressões.
+    # A função principal usa parsing recursivo descendente para traduzir tokens em instruções.
     pos = [0]
 
     def atual():
@@ -301,6 +333,7 @@ def parse_programa(tokens):
         return None
 
     def parse_bloco():
+        # Analisa um bloco de código que começa em 'AU' e termina em 'UAU'.
         comandos = []
         if atual() and atual()[1] == 'AU':
             proximo()
@@ -362,6 +395,8 @@ def parse_programa(tokens):
         return corpo
 
     def parse_comando():
+        # Analisa um único comando de alto nível, incluindo declarações, funções,
+        # classes, fluxo de controle e importações.
         token = atual()
         if not token:
             return None
@@ -518,6 +553,8 @@ def parse_programa(tokens):
         return parse_primary()
 
     def parse_primary():
+        # Analisa a parte mais básica de uma expressão, como literais, variáveis,
+        # chamadas, novos objetos e acessos a campos/índices.
         token = atual()
         if not token:
             return 0
@@ -622,6 +659,8 @@ def parse_programa(tokens):
 
 
 def executar_comando(cmd, interpreter):
+    # Executa um comando da AST no interpretador, atualizando variáveis,
+    # controlando o fluxo e chamando funções ou métodos conforme necessário.
     if not cmd:
         return None
 
@@ -759,6 +798,8 @@ def executar_comando(cmd, interpreter):
 
 
 def avaliar_expr(expr, interpreter):
+    # Avalia uma expressão recursivamente usando o ambiente atual e retorna o valor calculado.
+    # Suporta variáveis, campos, arrays, chamadas, operações binárias e objetos.
     if isinstance(expr, (int, float, str)):
         return expr
 
@@ -852,6 +893,8 @@ def avaliar_expr(expr, interpreter):
 
 
 def executar(codigo_dog, arquivo=None):
+    # Função de entrada principal para interpretar código DogLanguage em texto.
+    # Remove comentários em linha, tokeniza, parseia e executa o programa completo.
     try:
         linhas_limpas = []
         for linha in codigo_dog.split('\n'):

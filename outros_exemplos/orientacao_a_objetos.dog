@@ -57,8 +57,8 @@ uivar canil() AU
 
 
     animais[0].obter_nome()🐾
-    animais[1].obter_nome()🐾
-    animais[2].obter_nome()🐾
+    animais[1].aparencia()🐾
+    animais[2].aparencia()🐾
     animais[3].obter_nome()🐾
 
     // rex.comer()🐾
