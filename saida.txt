@@ -1,2 +1,2 @@
-Olá do DogLanguage!
-Nova linha de log
+Petisco 1: biscoito
+Petisco 2: ossinho

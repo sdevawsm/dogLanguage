@@ -3,4 +3,4 @@ enterrar("saida.txt", "Uivo no começo!\n");
 enterrar_mais("saida.txt", "Uivo no final!\n");
 pelo texto = cavar("saida.txt");
 latir("A leitura foi um sucesso, canil!\n%s", texto);
-latir("UAU! Hora de uivar por mais aventuras.");
+latir("UAU! Hora de uivar por mais aventuras.\n");

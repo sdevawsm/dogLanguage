@@ -1,7 +1,33 @@
 // Versão 6: versão brincalhona que conta quantas linhas existem
+
+
+
+uivar comprimento(pelo texto) AU
+    inteiro i = 0;
+    perseguir (texto[i] != "") AU
+        i = i + 1;
+    UAU
+    trazer_bolinha(i);
+UAU
+
+uivar dividir_em_linhas(pelo texto) AU
+    inteiro i = 0;
+    inteiro linhas = 1;
+    perseguir (texto[i] != "") AU
+        se_tiver_petisco (texto[i] == "\n") AU
+            linhas = linhas + 1;
+        UAU
+        i = i + 1;
+    UAU
+    trazer_bolinha(linhas);
+UAU
+
+
+
+
 enterrar("saida.txt", "Linha 1: olá cachorro\n");
 enterrar_mais("saida.txt", "Linha 2: farejando o arquivo\n");
 pelo texto = cavar("saida.txt");
-pelo linhas = texto.dividir("\n");
-latir("O arquivo tem %d linhas!", linhas.comprimento());
+pelo linhas = dividir_em_linhas(texto);
+latir("O arquivo tem %d linhas!\n", linhas);
 latir("Texto completo:\n%s", texto);
