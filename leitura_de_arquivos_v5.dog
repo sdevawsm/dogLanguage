@@ -1,0 +1,5 @@
+// Versão 5: histórico de leitura com um arquivo de log diferente
+enterrar("historia.txt", "Primeira pegada: comecei a escrever\n");
+enterrar_mais("historia.txt", "Segunda pegada: agora leio o arquivo\n");
+pelo historia = cavar("historia.txt");
+latir("Diário do canil:\n%s", historia);

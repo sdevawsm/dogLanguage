@@ -1,0 +1,6 @@
+// Versão 7: programa estilo repórter canino
+enterrar("saida.txt", "Notícia: cachorro encontrou um arquivo\n");
+enterrar_mais("saida.txt", "Atualização: o cachorro leu o arquivo\n");
+pelo texto = cavar("saida.txt");
+latir("🐾 Jornal do Canil 🐾\n%s", texto);
+latir("Fim da transmissão canina.");

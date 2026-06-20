@@ -1,0 +1,8 @@
+// Versão 3: leitura e verificação se o arquivo tem petiscos
+enterrar("saida.txt", "Petisco 1: biscoito\n");
+enterrar_mais("saida.txt", "Petisco 2: ossinho\n");
+pelo texto = cavar("saida.txt");
+se_tiver_petisco (texto != "") AU
+	latir("Achei %d caracteres no arquivo!", texto.comprimento());	
+	latir("Conteúdo lido:\n%s", texto);
+UAU

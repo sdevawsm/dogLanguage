@@ -162,6 +162,18 @@ pedigree escaneado = pedigree(farejar());
 latir("Você digitou: %d\n", escaneado);
 ```
 
+### Leitura e gravação de arquivos
+
+Use `enterrar(caminho, conteudo)` para gravar texto em um arquivo, `enterrar_mais(caminho, conteudo)` para acrescentar no final e `cavar(caminho)` para ler o conteúdo de um arquivo:
+
+```dog
+enterrar("saida.txt", "Olá do DogLanguage!\n");
+enterrar_mais("saida.txt", "Nova linha de log\n");
+pelo texto = cavar("saida.txt");
+latir("Conteúdo lido:\n%s", texto);
+```
+
+No exemplo acima, `enterrar_mais` funciona bem para um sistema de log, pois adiciona novas entradas sem apagar o que já estava no arquivo.
 
 ### Saída
 

@@ -136,6 +136,9 @@ class DogInterpreter:
         self.builtins = {
             'latir': self.latir,
             'farejar': self.farejar,
+            'enterrar': self.enterrar,
+            'enterrar_mais': self.enterrar_mais,
+            'cavar': self.cavar,
             'pedigree': self.cast_int,
             'pinscher': self.cast_int,
             'pelo': self.cast_str,
@@ -169,6 +172,43 @@ class DogInterpreter:
             return input()
         except EOFError:
             return ""
+
+    def enterrar(self, caminho, conteudo):
+        # Grava texto em arquivo usando o caminho relativo ao diretório atual do programa.
+        caminho = str(caminho)
+        if not os.path.isabs(caminho):
+            caminho = os.path.normpath(os.path.join(getattr(self, 'current_dir', os.getcwd()), caminho))
+        diretorio = os.path.dirname(caminho)
+        if diretorio:
+            os.makedirs(diretorio, exist_ok=True)
+        texto = str(conteudo).replace('\\n', '\n')
+        with open(caminho, 'w', encoding='utf-8') as f:
+            f.write(texto)
+        return 1
+
+    def enterrar_mais(self, caminho, conteudo):
+        # Acrescenta texto ao final de um arquivo de log ou diário.
+        caminho = str(caminho)
+        if not os.path.isabs(caminho):
+            caminho = os.path.normpath(os.path.join(getattr(self, 'current_dir', os.getcwd()), caminho))
+        diretorio = os.path.dirname(caminho)
+        if diretorio:
+            os.makedirs(diretorio, exist_ok=True)
+        texto = str(conteudo).replace('\\n', '\n')
+        with open(caminho, 'a', encoding='utf-8') as f:
+            f.write(texto)
+        return 1
+
+    def cavar(self, caminho):
+        # Lê texto de arquivo usando o caminho relativo ao diretório atual do programa.
+        caminho = str(caminho)
+        if not os.path.isabs(caminho):
+            caminho = os.path.normpath(os.path.join(getattr(self, 'current_dir', os.getcwd()), caminho))
+        try:
+            with open(caminho, 'r', encoding='utf-8') as f:
+                return f.read()
+        except FileNotFoundError:
+            raise RuntimeError(f"Arquivo '{caminho}' não encontrado")
 
     def cast_int(self, valor=0):
         try:

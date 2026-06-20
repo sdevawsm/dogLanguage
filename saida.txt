@@ -1,0 +1,2 @@
+Olá do DogLanguage!
+Nova linha de log
