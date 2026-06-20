@@ -1,7 +1,0 @@
-// Versão 2: função principal canil + aviso de leitura
-canil() AU
-	enterrar("saida.txt", "Arquivo de leitura pronto!\n");
-	enterrar_mais("saida.txt", "Segunda linha canina\n");
-	pelo texto = cavar("saida.txt");
-	latir("Olha só o que encontrei:\n%s", texto);
-UAU

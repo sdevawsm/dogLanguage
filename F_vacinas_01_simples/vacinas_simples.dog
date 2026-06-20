@@ -1,0 +1,5 @@
+// Programa 1: registra vacinas de um pet e exibe o histórico de leitura
+enterrar("vacinas_petA.txt", "Vacina: Raiva | Dia: 10/06/2026\n");
+enterrar_mais("vacinas_petA.txt", "Vacina: Cinomose | Dia: 15/06/2026\n");
+pelo historico = cavar("vacinas_petA.txt");
+latir("Histórico do pet A:\n%s", historico);

@@ -1,0 +1,7 @@
+// Programa 7: registra e mostra resumo de vacinas para um pet
+enterrar("vacinas_petG.txt", "Vacina: Bordetella | Dia: 03/06/2026\n");
+enterrar_mais("vacinas_petG.txt", "Vacina: Tosse do canil | Dia: 24/06/2026\n");
+
+pelo resumo = cavar("vacinas_petG.txt");
+latir("Resumo das vacinas do pet G:\n%s", resumo);
+latir("Revise sempre o arquivo para manter o histórico atualizado.\n");

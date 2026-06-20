@@ -1,0 +1,13 @@
+// Programa 2: registra vacinas com função e exibe o conteúdo
+uivar registrar_vacina(pelo caminho, pelo nome, pelo dia) AU
+    enterrar_mais(caminho, "Vacina: " + nome + " | Dia: " + dia + "\n");
+UAU
+
+uivar mostrar_vacinas(pelo caminho) AU
+    pelo conteudo = cavar(caminho);
+    latir("Vacinas registradas:\n%s", conteudo);
+UAU
+
+enterrar("vacinas_petB.txt", "Vacina: Filarioses | Dia: 12/06/2026\n");
+registrar_vacina("vacinas_petB.txt", "Hepatite", "20/06/2026");
+mostrar_vacinas("vacinas_petB.txt");

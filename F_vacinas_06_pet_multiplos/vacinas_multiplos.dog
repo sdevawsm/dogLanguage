@@ -1,0 +1,10 @@
+// Programa 6: registra vacinas para dois pets diferentes e mostra ambos os arquivos
+enterrar("vacinas_petF1.txt", "Vacina: Raiva | Dia: 04/06/2026\n");
+enterrar_mais("vacinas_petF1.txt", "Vacina: Hepatite | Dia: 16/06/2026\n");
+enterrar("vacinas_petF2.txt", "Vacina: Parvovirose | Dia: 07/06/2026\n");
+enterrar_mais("vacinas_petF2.txt", "Vacina: Coronavirose | Dia: 21/06/2026\n");
+
+pelo texto1 = cavar("vacinas_petF1.txt");
+pelo texto2 = cavar("vacinas_petF2.txt");
+latir("Vacinas do Pet F1:\n%s", texto1);
+latir("Vacinas do Pet F2:\n%s", texto2);

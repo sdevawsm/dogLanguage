@@ -1,0 +1,19 @@
+// Programa 5: conta quantas vacinas estão registradas no arquivo
+funcao contar_vacinas(pelo texto) AU
+    inteiro i = 0;
+    inteiro total = 0;
+    perseguir (texto[i] != "") AU
+        se_tiver_petisco (texto[i] == "V") AU
+            total = total + 1;
+        UAU
+        i = i + 1;
+    UAU
+    trazer_bolinha(total);
+UAU
+
+enterrar("vacinas_petE.txt", "Vacina: Leptospirose | Dia: 02/06/2026\n");
+enterrar_mais("vacinas_petE.txt", "Vacina: Cinomose | Dia: 19/06/2026\n");
+pelo texto = cavar("vacinas_petE.txt");
+pelo total = contar_vacinas(texto);
+latir("Total de vacinas registradas: %d\n", total);
+latir("Conteúdo completo:\n%s", texto);

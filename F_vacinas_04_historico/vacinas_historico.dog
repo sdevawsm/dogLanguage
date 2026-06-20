@@ -1,0 +1,14 @@
+// Programa 4: histórico de vacinas com exibição de cada linha
+enterrar("vacinas_petD.txt", "Vacina: Gripe canina | Dia: 08/06/2026\n");
+enterrar_mais("vacinas_petD.txt", "Vacina: Tosse dos canis | Dia: 22/06/2026\n");
+pelo conteudo = cavar("vacinas_petD.txt");
+pelo i = 0;
+inteiro entradas = 0;
+perseguir (conteudo[i] != "") AU
+    se_tiver_petisco (conteudo[i] == "V") AU
+        entradas = entradas + 1;
+    UAU
+    i = i + 1;
+UAU
+latir("Histórico de vacinas do pet D:\n%s", conteudo);
+latir("Total de entradas: %d", entradas);

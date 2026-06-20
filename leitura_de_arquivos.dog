@@ -1,4 +1,0 @@
-enterrar("saida.txt", "Olá do DogLanguage!\n");
-enterrar_mais("saida.txt", "Nova linha de log\n");
-pelo texto = cavar("saida.txt");
-latir("Conteúdo lido: %s", texto);

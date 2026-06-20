@@ -1,0 +1,10 @@
+// Programa 3: registra vacinas e verifica se há dados antes de mostrar
+enterrar("vacinas_petC.txt", "Vacina: Coronavirose | Dia: 05/06/2026\n");
+enterrar_mais("vacinas_petC.txt", "Vacina: Parvovirose | Dia: 18/06/2026\n");
+pelo vacinas = cavar("vacinas_petC.txt");
+se_tiver_petisco (vacinas != "") AU
+    latir("Registro do pet C:\n%s", vacinas);
+UAU
+ou_rosnar AU
+    latir("Ainda não há vacinas registradas para o pet C.");
+UAU
