@@ -1,0 +1,60 @@
+
+// Classe Vacinas encarregada de gerenciar o registro de vacinas dos pets
+matilha Vacinas AU
+    pelo dados = "";
+    
+    instinto() AU
+        tentar_pegar AU
+            pelo dados = pelo(cavar("dados.txt"));
+            eu_mesmo.dados = dados;
+        UAU
+        fugiu_o_gato AU
+            eu_mesmo.dados = "";
+            enterrar("dados.txt", "");
+        UAU
+    UAU
+
+    uivar imprimir_vacinas() AU
+        latir("\n=== Histórico de Vacinas ===\n");
+        se_tiver_petisco (eu_mesmo.dados == "") AU
+            latir("Nenhuma vacina registrada ainda.\n");
+        UAU
+        ou_rosnar AU
+            latir("%s", eu_mesmo.dados);
+            latir("\n");
+        UAU
+        latir("============================\n");
+    UAU
+
+   uivar registrar_vacina(pelo pet,pelo nome, pelo dia) AU
+        pelo registro = "Pet: "+ pet + " | Vacina: " + nome + " | Dia: " + dia + "\n";
+        eu_mesmo.dados = eu_mesmo.dados + registro;
+        enterrar_mais("dados.txt", registro);
+    UAU
+UAU
+
+
+
+//Função principal( função main em outras linguagens)
+uivar canil() AU
+    vira_lata vacinas = novo Vacinas();
+    vacinas.imprimir_vacinas();
+
+    latir("Deseja registrar nova vacina? (s/n) ");
+    pelo resposta = farejar();
+    se_tiver_petisco (resposta == "s") AU
+        latir("Digite o nome do pet: ");
+        pelo pet = farejar();
+        latir("Digite o nome da vacina: ");
+        pelo nome = farejar();
+        latir("Digite o dia da vacina: ");
+        pelo dia = farejar();
+        
+        vacinas.registrar_vacina(pet, nome, dia);
+        latir("Vacina registrada com sucesso!\n");
+        vacinas.imprimir_vacinas();
+    UAU
+    ou_rosnar AU
+        latir("Nenhuma vacina nova foi registrada.\n");
+    UAU
+UAU
